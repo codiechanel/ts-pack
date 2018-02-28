@@ -6,7 +6,7 @@ const globalModules = require("global-modules");
 const ourGlobalFolder = path.join(
   globalModules,
   "./",
-  "ts-pack"
+  "@codiechanel/ts-pack"
 );
 
 module.exports = {

@@ -1,14 +1,17 @@
 #!/usr/bin/env node
 ("use strict");
-console.log('cool')
+console.log("cool");
 var program = require("commander");
 var fs = require("fs");
 var path = require("path");
+const Webpack = require("webpack");
 let pkg = require(path.join(__dirname, "..", "package.json"));
 
 program.version(pkg.version);
-program
-  .option("-c --config <webpack-config>", "additional webpack configuration")
+program.option(
+  "-c --config <webpack-config>",
+  "additional webpack configuration"
+);
 
 program
   .command("dev")
@@ -16,7 +19,7 @@ program
   .action(function(cmd, options) {
     console.log("Starting dev server...");
     // buildReact.dev();
-    const Webpack = require("webpack");
+    
     const WebpackDevServer = require("webpack-dev-server");
     const webpackConfig = require(path.join(
       __dirname,
@@ -38,4 +41,34 @@ program
     });
   });
 
-  program.parse(process.argv);
+program
+  .command("prod")
+  .description("building typescript proj")
+  .action(function(cmd, options) {
+    
+    
+    // const WebpackDevServer = require("webpack-dev-server");
+    const webpackConfig = require(path.join(
+      __dirname,
+      "..",
+      "webpack.config.prod"
+    ));
+    Webpack(webpackConfig, function(err, stats) {
+      if (err || stats.hasErrors()) {
+        // Handle errors here
+        const info = stats.toJson();
+        console.error(info.errors);
+      } else {
+        console.log(
+          "build successful",
+          stats.toString({
+            // ...
+            // Add console colors
+            colors: true
+          })
+        );
+      }
+    });
+  });
+
+program.parse(process.argv);
