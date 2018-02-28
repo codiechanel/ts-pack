@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "outDir": "./public/",
+    //   "sourceMap": true,
+    "experimentalDecorators": true,
+    "noImplicitAny": true,
+    // this affects when you are importing other libraries
+    // i tried es6 but error importing material ui
+    "module": "commonjs",
+    // "module": "ES6",
+    // es5 guarantees support in all browsers
+    // es6 or es2015 has been supported by major browsers
+    "target": "es6",
+    "jsx": "react"
+  },
+  "include": ["./src/**/*"]
+}
