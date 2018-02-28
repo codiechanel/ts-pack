@@ -10,4 +10,4 @@ For devt mode
 
 For production:
 
-'ts-pack prod'
+`ts-pack prod`
