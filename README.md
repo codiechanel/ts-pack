@@ -12,6 +12,8 @@ For production:
 
 `ts-pack prod`
 
+Just add `tsconfig.json` on your root folder with the following values. 
+
 ```javascript
 {
   "compilerOptions": {
