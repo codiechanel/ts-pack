@@ -38,11 +38,15 @@ module.exports = {
   // entry: "./src/index.tsx",
   mode:"development",
   // devtool: "inline-source-map",
+  /**
+   * it seems that webpack auto resolves the path now
+   * no need to use require.resolve
+   */
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        use: require.resolve("ts-loader"),
+        use: "ts-loader",
         exclude: /node_modules/
       }
     ]
