@@ -24,7 +24,10 @@ module.exports = {
   },
   context: process.cwd(),
   /**
-   * i think the entries below is already added by default
+   * this is weird
+   * if installed globally i need to add these
+   * to make hot reloading to work
+   * but locally, it works without it
    */
   entry: [
     // polyfills if any
