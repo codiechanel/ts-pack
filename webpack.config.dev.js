@@ -9,6 +9,19 @@ const ourGlobalFolder = path.join(
   "@codiechanel/ts-pack"
 );
 
+const autoprefixer = require("autoprefixer");
+const postCSSLoaderOptions = {
+  // Necessary for external CSS imports to work
+  // https://github.com/facebook/create-react-app/issues/2677
+  ident: "postcss",
+  plugins: () => [
+    require("postcss-flexbugs-fixes"),
+    autoprefixer({
+      flexbox: "no-2009"
+    })
+  ]
+};
+
 module.exports = {
   devServer: {
     // no effect
@@ -44,11 +57,68 @@ module.exports = {
    */
   module: {
     rules: [
+    
+      {
+        test: /\.css$/,
+        exclude: /\.module\.css$/,
+        use: [
+          require.resolve("style-loader"),
+          {
+            loader: require.resolve("css-loader"),
+            options: {
+              importLoaders: 1
+            }
+          },
+          {
+            loader: require.resolve("postcss-loader"),
+            options: postCSSLoaderOptions
+          }
+        ]
+      },
+      // Adds support for CSS Modules (https://github.com/css-modules/css-modules)
+      // using the extension .module.css
+      {
+        test: /\.module\.css$/,
+        use: [
+          require.resolve("style-loader"),
+          {
+            loader: require.resolve("typings-for-css-modules-loader"),
+            options: {
+              namedExport: true, 
+              modules: true,
+              importLoaders: 1,
+              localIdentName: "[path]__[name]___[local]"
+            }
+          },
+          {
+            loader: require.resolve("postcss-loader"),
+            options: postCSSLoaderOptions
+          }
+          
+        ]
+      }, 
+      {
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        use: [
+          {
+            loader: require.resolve('file-loader'),
+            options: { 
+              /**
+               * let's simplify for now
+               */
+              // name: '[path][name].[ext]',
+              name: '[name].[ext]',
+              // outputPath: 'assets/', 
+              // publicPath: 'assets/'
+            }  
+          }
+        ]
+      }, 
       {
         test: /\.tsx?$/,
         use: "ts-loader",
         exclude: /node_modules/
-      }
+      }, 
     ]
   },
   // resolve: {
@@ -71,6 +141,13 @@ module.exports = {
    */
   plugins: [
     new Webpack.HotModuleReplacementPlugin(),
+    /**
+     * we need to ignore the typings generated
+     * because it slows down webpack compilation
+     */
+    new Webpack.WatchIgnorePlugin([
+      /css\.d\.ts$/
+    ]),
   ], 
   externals: {
     "react": "React",
