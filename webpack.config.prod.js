@@ -7,6 +7,19 @@ const ourGlobalFolder = path.join(
   "@codiechanel/ts-pack"
 );
 
+const autoprefixer = require("autoprefixer");
+const postCSSLoaderOptions = {
+  // Necessary for external CSS imports to work
+  // https://github.com/facebook/create-react-app/issues/2677
+  ident: "postcss",
+  plugins: () => [
+    require("postcss-flexbugs-fixes"),
+    autoprefixer({
+      flexbox: "no-2009"
+    })
+  ]
+};
+
 module.exports = {
   /**
    * there seems to be no need to add context
@@ -21,7 +34,61 @@ module.exports = {
         test: /\.tsx?$/,
         use: "ts-loader",
         exclude: /node_modules/
-      }
+      },
+      {
+        test: /\.css$/,
+        exclude: /\.module\.css$/,
+        use: [
+          require.resolve("style-loader"),
+          {
+            loader: require.resolve("css-loader"),
+            options: {
+              importLoaders: 1
+            }
+          },
+          {
+            loader: require.resolve("postcss-loader"),
+            options: postCSSLoaderOptions
+          }
+        ]
+      },
+      // Adds support for CSS Modules (https://github.com/css-modules/css-modules)
+      // using the extension .module.css
+      {
+        test: /\.module\.css$/,
+        use: [
+          require.resolve("style-loader"),
+          {
+            loader: require.resolve("css-loader"),
+            options: {
+              importLoaders: 1,
+              modules: true,
+              localIdentName: "[path]__[name]___[local]"
+            }
+          },
+          {
+            loader: require.resolve("postcss-loader"),
+            options: postCSSLoaderOptions
+          }
+        ]
+      }, 
+      {
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        use: [
+          {
+            loader: require.resolve('file-loader'),
+            options: { 
+              /**
+               * let's simplify for now
+               */
+              // name: '[path][name].[ext]',
+              name: '[name].[ext]',
+              // outputPath: 'assets/', 
+              // publicPath: 'assets/'
+            }  
+          }
+        ]
+      }, 
     ]
   },
   resolve: {
