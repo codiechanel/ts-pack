@@ -50,7 +50,7 @@ module.exports = {
   ],
   // entry: "./src/index.tsx",
   mode:"development",
-  // devtool: "inline-source-map",
+  devtool: "inline-source-map",
   /**
    * it seems that webpack auto resolves the path now
    * no need to use require.resolve
@@ -117,7 +117,11 @@ module.exports = {
       {
         test: /\.tsx?$/,
         use: "ts-loader",
-        exclude: /node_modules/
+        include: [
+          path.resolve(process.cwd(), "src"),
+        ], 
+        // exclude: [path.resolve(ourGlobalFolder, "node_modules"), path.resolve(process.cwd(), 'node_modules'),"node_modules"]
+        // exclude: /node_modules/
       }, 
     ]
   },
@@ -151,6 +155,7 @@ module.exports = {
   ], 
   externals: {
     "react": "React",
-    "react-dom": "ReactDOM"
+    "react-dom": "ReactDOM", 
+    "PropTypes": "prop-types"
   }
 };
