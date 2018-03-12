@@ -23,6 +23,7 @@
     "global-modules": "^1.0.0",
     "postcss-flexbugs-fixes": "^3.3.0",
     "postcss-loader": "^2.1.1",
+    "raw-loader": "^0.5.1",
     "style-loader": "^0.20.2",
     "ts-loader": "^4.0.0",
     "typescript": "^2.7.2",

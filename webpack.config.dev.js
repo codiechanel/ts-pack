@@ -123,6 +123,10 @@ module.exports = {
         // exclude: [path.resolve(ourGlobalFolder, "node_modules"), path.resolve(process.cwd(), 'node_modules'),"node_modules"]
         // exclude: /node_modules/
       }, 
+      {
+        test: /\.(vert|frag)$/,
+        use: 'raw-loader'
+      }
     ]
   },
   // resolve: {
@@ -144,6 +148,10 @@ module.exports = {
    * you need to add this if you use hot: true
    */
   plugins: [
+    new Webpack.DefinePlugin({
+      WEBGL_RENDERER: false,
+      CANVAS_RENDERER: true,
+    }), 
     new Webpack.HotModuleReplacementPlugin(),
     /**
      * we need to ignore the typings generated
