@@ -34,6 +34,14 @@ module.exports = {
     stats: {
       colors: true
     },
+    proxy: {
+      "/.netlify/functions": {
+        target: "http://localhost:9000",
+        pathRewrite: {
+          "^/\\.netlify/functions": ""
+        }
+      }
+    }
   },
   context: process.cwd(),
   /**
