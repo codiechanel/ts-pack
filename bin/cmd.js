@@ -96,18 +96,18 @@ program
   .action(function(cmd, options) {
     console.log("Starting server");
     var server = serve.listen(9000);
-    // build.watch(cmd, program.config, function(err, stats) {
-    //   if (err) {
-    //     console.error(err);
-    //     return;
-    //   }
+    build.watch(cmd, program.config, function(err, stats) {
+      if (err) {
+        console.error(err);
+        return;
+      }
 
-    //   stats.compilation.chunks.forEach(function(chunk) {
-    //     server.clearCache(chunk.name);
-    //   });
+      stats.compilation.chunks.forEach(function(chunk) {
+        server.clearCache(chunk.name);
+      });
 
-    //   console.log(stats.toString({ color: true }));
-    // });
+      console.log(stats.toString({ color: true }));
+    });
   });  
 
 program.parse(process.argv);
