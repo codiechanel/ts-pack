@@ -22,6 +22,15 @@ const postCSSLoaderOptions = {
 
 module.exports = {
   /**
+   * no effect when using webpack node api 
+   */
+  stats: {
+    maxModules: 25,
+    modules: true,
+    chunkOrigins: true,
+    providedExports: true,
+  }, 
+  /**
    * there seems to be no need to add context
    */
   // context: process.cwd(),
@@ -104,8 +113,10 @@ module.exports = {
     // path: path.resolve(__dirname, "public")
   },
   externals: {
-    react: "React",
+    "react": "React",
     "react-dom": "ReactDOM", 
-    "PropTypes": "prop-types"
+    "prop-types": "PropTypes", 
+    "react-router-dom": "ReactRouterDOM", 
+    "react-router" : "ReactRouter"
   }
 };

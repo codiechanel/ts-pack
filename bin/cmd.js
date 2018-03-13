@@ -58,9 +58,10 @@ program
     Webpack(webpackConfig, function(err, stats) {
       if (err || stats.hasErrors()) {
         // Handle errors here
-        const info = stats.toJson();
+        const info = stats.toJson("verbose");
         console.error(info.errors);
       } else {
+        
         console.log(
           "build successful",
           stats.toString({

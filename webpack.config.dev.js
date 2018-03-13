@@ -172,6 +172,8 @@ module.exports = {
   externals: {
     "react": "React",
     "react-dom": "ReactDOM", 
-    "PropTypes": "prop-types"
+    "prop-types": "PropTypes", 
+    "react-router-dom": "ReactRouterDOM", 
+    "react-router" : "ReactRouter"
   }
 };
