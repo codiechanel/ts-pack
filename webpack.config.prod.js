@@ -1,5 +1,5 @@
 const path = require("path");
-
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const globalModules = require("global-modules");
 const ourGlobalFolder = path.join(
   globalModules,
@@ -117,6 +117,25 @@ module.exports = {
     "react-dom": "ReactDOM", 
     "prop-types": "PropTypes", 
     "react-router-dom": "ReactRouterDOM", 
-    "react-router" : "ReactRouter"
-  }
+    "react-router" : "ReactRouter", 
+   
+  },
+  /**
+   * doesn't really decrease the bundle size
+   */
+  // optimization: {
+	// 	minimize: true,
+	// 	minimizer: [
+	// 		new UglifyJsPlugin({
+	// 			uglifyOptions: {
+	// 				output: {
+	// 					comments: false
+	// 				},
+	// 				compress: {
+	// 					dead_code: true
+	// 				}
+	// 			}
+	// 		})
+	// 	]
+	// }
 };

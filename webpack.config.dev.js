@@ -83,6 +83,7 @@ module.exports = {
           }
         ]
       },
+      // { test: /\.module\.css$/, loader: 'typings-for-css-modules-loader?modules&namedExport' }, 
       // Adds support for CSS Modules (https://github.com/css-modules/css-modules)
       // using the extension .module.css
       {
@@ -90,10 +91,15 @@ module.exports = {
         use: [
           require.resolve("style-loader"),
           {
-            loader: require.resolve("typings-for-css-modules-loader"),
+            
+            loader: require.resolve("css-loader"),
+            // loader: require.resolve("typings-for-css-modules-loader"),
             options: {
-              namedExport: true, 
+              // namedExport not used by css-loader
+              // namedExport: true, 
+              // Enable/Disable CSS Modules
               modules: true,
+              // Number of loaders applied before CSS loader
               importLoaders: 1,
               localIdentName: "[path]__[name]___[local]"
             }
