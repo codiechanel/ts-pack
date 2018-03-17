@@ -118,6 +118,7 @@ module.exports = {
     "prop-types": "PropTypes", 
     "react-router-dom": "ReactRouterDOM", 
     "react-router" : "ReactRouter", 
+    "rxjs":"rxjs"
    
   },
   /**

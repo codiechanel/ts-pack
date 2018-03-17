@@ -1,6 +1,7 @@
 const path = require("path");
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const globalModules = require("global-modules");
+var nodeExternals = require('webpack-node-externals');
 const ourGlobalFolder = path.join(
   globalModules,
   "./",
@@ -27,6 +28,10 @@ module.exports = {
         use: "ts-loader",
         exclude: /node_modules/
       },
+      // {
+      //   test: /\.json$/,
+      //   use: 'json-loader'
+      // }
     ]
   },
   resolve: {
@@ -34,7 +39,11 @@ module.exports = {
     // plugins: [
     //   new TsconfigPathsPlugin({baseUrl: process.cwd(), configFile:path.resolve(process.cwd(), "tsconfig-lambda.json")  })
     // ], 
-    extensions: [".tsx", ".ts", ".js"]
+    /**
+     * which is what enables users to leave off the extension when importing:
+     * Using this will override the default array
+     */
+    extensions: [".tsx", ".ts", ".js", ".json"]
   },
   resolveLoader: {
     modules: [path.resolve(ourGlobalFolder, "node_modules")]
@@ -51,6 +60,7 @@ module.exports = {
     filename: "[name].js",
     libraryTarget: "commonjs"
   },
+  // externals: [nodeExternals()],
   // plugins: [
   //   new TsconfigPathsPlugin({ configFile:path.resolve(process.cwd(), "tsconfig-lambda.json")  })
   // ], 
