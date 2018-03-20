@@ -21,7 +21,7 @@ program
   .action(function(cmd, options) {
     console.log("Starting dev server...");
     // buildReact.dev();
-    
+
     const WebpackDevServer = require("webpack-dev-server");
     const webpackConfig = require(path.join(
       __dirname,
@@ -47,8 +47,6 @@ program
   .command("prod")
   .description("building typescript proj")
   .action(function(cmd, options) {
-    
-    
     // const WebpackDevServer = require("webpack-dev-server");
     const webpackConfig = require(path.join(
       __dirname,
@@ -61,7 +59,6 @@ program
         const info = stats.toJson("verbose");
         console.error(info.errors);
       } else {
-        
         console.log(
           "build successful",
           stats.toString({
@@ -75,6 +72,34 @@ program
   });
 
   program
+  .command("lib")
+  .description("building typescript library")
+  .action(function(cmd, options) {
+    // const WebpackDevServer = require("webpack-dev-server");
+    const webpackConfig = require(path.join(
+      __dirname,
+      "..",
+      "webpack.config.lib"
+    ));
+    Webpack(webpackConfig, function(err, stats) {
+      if (err || stats.hasErrors()) {
+        // Handle errors here
+        const info = stats.toJson("verbose");
+        console.error(info.errors);
+      } else {
+        console.log(
+          "build successful",
+          stats.toString({
+            // ...
+            // Add console colors
+            colors: true
+          })
+        );
+      }
+    });
+  });  
+
+program
   .command("build <dir>")
   .description("build functions")
   .action(function(cmd, options) {
@@ -90,8 +115,8 @@ program
         process.exit(1);
       });
   });
-  
-  program
+
+program
   .command("serve <dir>")
   .description("serve and watch functions")
   .action(function(cmd, options) {
@@ -109,6 +134,6 @@ program
 
       console.log(stats.toString({ color: true }));
     });
-  });  
+  });
 
 program.parse(process.argv);

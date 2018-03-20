@@ -19,6 +19,8 @@ const postCSSLoaderOptions = {
     })
   ]
 };
+let pkg = require(path.join(process.cwd(), "./", "package.json"));
+let libraryName = pkg.name;
 
 module.exports = {
   /**
@@ -33,8 +35,11 @@ module.exports = {
   /**
    * there seems to be no need to add context
    */
-  // context: process.cwd(),
-  entry: "./src/index.tsx",
+  context: process.cwd(),
+  entry: [
+    // polyfills if any
+    "./src/index.ts"
+  ],
   mode:"production",
   // devtool: "inline-source-map",
   module: {
@@ -107,20 +112,20 @@ module.exports = {
   resolveLoader: {
     modules: [path.resolve(ourGlobalFolder, "node_modules")]
   },
+
   output: {
-    filename: "bundle.js",
-    path: path.resolve(process.cwd(), "public"),
-    // path: path.resolve(__dirname, "public")
-  },
-  externals: {
-    "react": "React",
-    "react-dom": "ReactDOM", 
-    "prop-types": "PropTypes", 
-    "react-router-dom": "ReactRouterDOM", 
-    "react-router" : "ReactRouter", 
-    // "rxjs":"rxjs"
+    filename: "index.js",
+   // publicPath: publicPath,
+   path: path.resolve(process.cwd(), "lib"), 
+   library: libraryName, 
+   libraryTarget: 'umd',
+   // umdNamedDefine: true,
+   // libraryTarget: 'commonjs2',
    
-  },
+ },
+ externals:  pkg.externals
+
+
   /**
    * doesn't really decrease the bundle size
    */
@@ -140,3 +145,5 @@ module.exports = {
 	// 	]
 	// }
 };
+
+
