@@ -23,6 +23,7 @@ let pkg = require(path.join(process.cwd(), "./", "package.json"));
 let libraryName = pkg.name;
 
 module.exports = {
+  devtool: 'source-map',
   /**
    * no effect when using webpack node api 
    */

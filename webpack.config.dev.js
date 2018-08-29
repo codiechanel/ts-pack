@@ -25,7 +25,7 @@ const postCSSLoaderOptions = {
 module.exports = {
   devServer: {
     // no effect
-    // inline: true,
+    inline: true,
     historyApiFallback: true, 
     contentBase: path.join(process.cwd(), "public"),
     hot: true,
@@ -175,12 +175,21 @@ module.exports = {
       /css\.d\.ts$/
     ]),
   ], 
-  externals: {
-    "react": "React",
-    "react-dom": "ReactDOM", 
-    "prop-types": "PropTypes", 
-    "react-router-dom": "ReactRouterDOM", 
-    "react-router" : "ReactRouter",
-    // "rxjs":"rxjs"
-  }
+  // "externals": [
+  //   { "react": "React" },
+  //  { "react-dom": "ReactDOM" },
+  //   "prop-types",
+  //   // "rxjs",
+  //   // "rxjs/operators",
+  // ],
+    externals: {
+        "react": "React",
+        "react-dom": "ReactDOM",
+        "prop-types": "PropTypes",
+        "react-router-dom": "ReactRouterDOM",
+        "react-router" : "ReactRouter",
+        // "rxjs":"rxjs"
+
+    },
+
 };

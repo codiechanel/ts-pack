@@ -73,7 +73,8 @@ program
 
   program
   .command("lib")
-  .description("building typescript library")
+  .option('-w, --watch', 'watch mode')
+  .description("build library")
   .action(function(cmd, options) {
     // const WebpackDevServer = require("webpack-dev-server");
     const webpackConfig = require(path.join(
@@ -81,6 +82,9 @@ program
       "..",
       "webpack.config.lib"
     ));
+    if (cmd.watch) {
+      webpackConfig.watch = true
+    }
     Webpack(webpackConfig, function(err, stats) {
       if (err || stats.hasErrors()) {
         // Handle errors here
